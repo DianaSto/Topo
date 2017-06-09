@@ -1,0 +1,705 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FirmaTopografie.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActivityTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cars">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log_driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_user" Type="int" Nullable="false" />
+          <Property Name="id_project" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="vehicle_number" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="km" Type="int" Nullable="false" />
+          <Property Name="hours" Type="int" Nullable="false" />
+          <Property Name="observations" Type="nvarchar" MaxLength="255" />
+          <Property Name="id_pass1" Type="int" />
+          <Property Name="id_pass2" Type="int" />
+          <Property Name="id_pass3" Type="int" />
+          <Property Name="id_pass4" Type="int" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_user" Type="int" Nullable="false" />
+          <Property Name="id_project" Type="int" />
+          <Property Name="id_activity_type" Type="int" />
+          <Property Name="cantitate" Type="int" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="hours" Type="int" Nullable="false" />
+          <Property Name="observations" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ProjectCategories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="id_category" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_role" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Log_drive__id_pa__35BCFE0A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__36B12243">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__37A5467C">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__38996AB5">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pr__34C8D9D1">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_us__33D4B598">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Log_driver" Type="Self.Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__id_activit__30F848ED">
+          <End Role="ActivityTypes" Type="Self.ActivityTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="id_activity_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__id_project__300424B4">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__id_user__2F10007B">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Projects__id_cat__2A4B4B5E">
+          <End Role="ProjectCategories" Type="Self.ProjectCategories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectCategories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__id_role__25869641">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FirmaTopografieStoreContainer">
+          <EntitySet Name="ActivityTypes" EntityType="Self.ActivityTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cars" EntityType="Self.Cars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log_driver" EntityType="Self.Log_driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectCategories" EntityType="Self.ProjectCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Log_drive__id_pa__35BCFE0A" Association="Self.FK__Log_drive__id_pa__35BCFE0A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__36B12243" Association="Self.FK__Log_drive__id_pa__36B12243">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__37A5467C" Association="Self.FK__Log_drive__id_pa__37A5467C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__38996AB5" Association="Self.FK__Log_drive__id_pa__38996AB5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pr__34C8D9D1" Association="Self.FK__Log_drive__id_pr__34C8D9D1">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_us__33D4B598" Association="Self.FK__Log_drive__id_us__33D4B598">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__id_activit__30F848ED" Association="Self.FK__Logs__id_activit__30F848ED">
+            <End Role="ActivityTypes" EntitySet="ActivityTypes" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__id_project__300424B4" Association="Self.FK__Logs__id_project__300424B4">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__id_user__2F10007B" Association="Self.FK__Logs__id_user__2F10007B">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Projects__id_cat__2A4B4B5E" Association="Self.FK__Projects__id_cat__2A4B4B5E">
+            <End Role="ProjectCategories" EntitySet="ProjectCategories" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__id_role__25869641" Association="Self.FK__Users__id_role__25869641">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FirmaTopografie" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Pontaje_firma_topografieEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActivityTypes" EntityType="FirmaTopografie.ActivityType" />
+          <EntitySet Name="Cars" EntityType="FirmaTopografie.Car" />
+          <EntitySet Name="Log_driver" EntityType="FirmaTopografie.Log_driver" />
+          <EntitySet Name="Logs" EntityType="FirmaTopografie.Log" />
+          <EntitySet Name="ProjectCategories" EntityType="FirmaTopografie.ProjectCategory" />
+          <EntitySet Name="Projects" EntityType="FirmaTopografie.Project" />
+          <EntitySet Name="Roles" EntityType="FirmaTopografie.Role" />
+          <EntitySet Name="Users" EntityType="FirmaTopografie.User" />
+          <AssociationSet Name="FK__Logs__id_activit__30F848ED" Association="FirmaTopografie.FK__Logs__id_activit__30F848ED">
+            <End Role="ActivityType" EntitySet="ActivityTypes" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__35BCFE0A" Association="FirmaTopografie.FK__Log_drive__id_pa__35BCFE0A">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__36B12243" Association="FirmaTopografie.FK__Log_drive__id_pa__36B12243">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__37A5467C" Association="FirmaTopografie.FK__Log_drive__id_pa__37A5467C">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pa__38996AB5" Association="FirmaTopografie.FK__Log_drive__id_pa__38996AB5">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_pr__34C8D9D1" Association="FirmaTopografie.FK__Log_drive__id_pr__34C8D9D1">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Log_drive__id_us__33D4B598" Association="FirmaTopografie.FK__Log_drive__id_us__33D4B598">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log_driver" EntitySet="Log_driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__id_project__300424B4" Association="FirmaTopografie.FK__Logs__id_project__300424B4">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Logs__id_user__2F10007B" Association="FirmaTopografie.FK__Logs__id_user__2F10007B">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Projects__id_cat__2A4B4B5E" Association="FirmaTopografie.FK__Projects__id_cat__2A4B4B5E">
+            <End Role="ProjectCategory" EntitySet="ProjectCategories" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__id_role__25869641" Association="FirmaTopografie.FK__Users__id_role__25869641">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ActivityType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Logs" Relationship="FirmaTopografie.FK__Logs__id_activit__30F848ED" FromRole="ActivityType" ToRole="Log" />
+        </EntityType>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Log_driver">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <Property Name="id_project" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="vehicle_number" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="km" Type="Int32" Nullable="false" />
+          <Property Name="hours" Type="Int32" Nullable="false" />
+          <Property Name="observations" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="id_pass1" Type="Int32" />
+          <Property Name="id_pass2" Type="Int32" />
+          <Property Name="id_pass3" Type="Int32" />
+          <Property Name="id_pass4" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="FirmaTopografie.FK__Log_drive__id_pa__35BCFE0A" FromRole="Log_driver" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="FirmaTopografie.FK__Log_drive__id_pa__36B12243" FromRole="Log_driver" ToRole="User" />
+          <NavigationProperty Name="User2" Relationship="FirmaTopografie.FK__Log_drive__id_pa__37A5467C" FromRole="Log_driver" ToRole="User" />
+          <NavigationProperty Name="User3" Relationship="FirmaTopografie.FK__Log_drive__id_pa__38996AB5" FromRole="Log_driver" ToRole="User" />
+          <NavigationProperty Name="Project" Relationship="FirmaTopografie.FK__Log_drive__id_pr__34C8D9D1" FromRole="Log_driver" ToRole="Project" />
+          <NavigationProperty Name="User4" Relationship="FirmaTopografie.FK__Log_drive__id_us__33D4B598" FromRole="Log_driver" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_user" Type="Int32" Nullable="false" />
+          <Property Name="id_project" Type="Int32" />
+          <Property Name="id_activity_type" Type="Int32" />
+          <Property Name="cantitate" Type="Int32" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="hours" Type="Int32" Nullable="false" />
+          <Property Name="observations" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ActivityType" Relationship="FirmaTopografie.FK__Logs__id_activit__30F848ED" FromRole="Log" ToRole="ActivityType" />
+          <NavigationProperty Name="Project" Relationship="FirmaTopografie.FK__Logs__id_project__300424B4" FromRole="Log" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="FirmaTopografie.FK__Logs__id_user__2F10007B" FromRole="Log" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ProjectCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Projects" Relationship="FirmaTopografie.FK__Projects__id_cat__2A4B4B5E" FromRole="ProjectCategory" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="id_category" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Log_driver" Relationship="FirmaTopografie.FK__Log_drive__id_pr__34C8D9D1" FromRole="Project" ToRole="Log_driver" />
+          <NavigationProperty Name="Logs" Relationship="FirmaTopografie.FK__Logs__id_project__300424B4" FromRole="Project" ToRole="Log" />
+          <NavigationProperty Name="ProjectCategory" Relationship="FirmaTopografie.FK__Projects__id_cat__2A4B4B5E" FromRole="Project" ToRole="ProjectCategory" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="FirmaTopografie.FK__Users__id_role__25869641" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Log_driver" Relationship="FirmaTopografie.FK__Log_drive__id_pa__35BCFE0A" FromRole="User" ToRole="Log_driver" />
+          <NavigationProperty Name="Log_driver1" Relationship="FirmaTopografie.FK__Log_drive__id_pa__36B12243" FromRole="User" ToRole="Log_driver" />
+          <NavigationProperty Name="Log_driver2" Relationship="FirmaTopografie.FK__Log_drive__id_pa__37A5467C" FromRole="User" ToRole="Log_driver" />
+          <NavigationProperty Name="Log_driver3" Relationship="FirmaTopografie.FK__Log_drive__id_pa__38996AB5" FromRole="User" ToRole="Log_driver" />
+          <NavigationProperty Name="Log_driver4" Relationship="FirmaTopografie.FK__Log_drive__id_us__33D4B598" FromRole="User" ToRole="Log_driver" />
+          <NavigationProperty Name="Logs" Relationship="FirmaTopografie.FK__Logs__id_user__2F10007B" FromRole="User" ToRole="Log" />
+          <NavigationProperty Name="Role" Relationship="FirmaTopografie.FK__Users__id_role__25869641" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Logs__id_activit__30F848ED">
+          <End Type="FirmaTopografie.ActivityType" Role="ActivityType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActivityType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="id_activity_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__35BCFE0A">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="0..1" />
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__36B12243">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="0..1" />
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__37A5467C">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="0..1" />
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pa__38996AB5">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="0..1" />
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_pass4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_pr__34C8D9D1">
+          <End Type="FirmaTopografie.Project" Role="Project" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Log_drive__id_us__33D4B598">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Log_driver" Role="Log_driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log_driver">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__id_project__300424B4">
+          <End Type="FirmaTopografie.Project" Role="Project" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="id_project" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Logs__id_user__2F10007B">
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Projects__id_cat__2A4B4B5E">
+          <End Type="FirmaTopografie.ProjectCategory" Role="ProjectCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__id_role__25869641">
+          <End Type="FirmaTopografie.Role" Role="Role" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="FirmaTopografie.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FirmaTopografieStoreContainer" CdmEntityContainer="Pontaje_firma_topografieEntities">
+          <EntitySetMapping Name="ActivityTypes">
+            <EntityTypeMapping TypeName="FirmaTopografie.ActivityType">
+              <MappingFragment StoreEntitySet="ActivityTypes">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cars">
+            <EntityTypeMapping TypeName="FirmaTopografie.Car">
+              <MappingFragment StoreEntitySet="Cars">
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log_driver">
+            <EntityTypeMapping TypeName="FirmaTopografie.Log_driver">
+              <MappingFragment StoreEntitySet="Log_driver">
+                <ScalarProperty Name="id_pass4" ColumnName="id_pass4" />
+                <ScalarProperty Name="id_pass3" ColumnName="id_pass3" />
+                <ScalarProperty Name="id_pass2" ColumnName="id_pass2" />
+                <ScalarProperty Name="id_pass1" ColumnName="id_pass1" />
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="hours" ColumnName="hours" />
+                <ScalarProperty Name="km" ColumnName="km" />
+                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="id_project" ColumnName="id_project" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="FirmaTopografie.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="observations" ColumnName="observations" />
+                <ScalarProperty Name="hours" ColumnName="hours" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="cantitate" ColumnName="cantitate" />
+                <ScalarProperty Name="id_activity_type" ColumnName="id_activity_type" />
+                <ScalarProperty Name="id_project" ColumnName="id_project" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectCategories">
+            <EntityTypeMapping TypeName="FirmaTopografie.ProjectCategory">
+              <MappingFragment StoreEntitySet="ProjectCategories">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="FirmaTopografie.Project">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="id_category" ColumnName="id_category" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="FirmaTopografie.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FirmaTopografie.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

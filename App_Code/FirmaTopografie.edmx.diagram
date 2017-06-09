@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d85f017205794b5d84c9e25a983be30e" Name="Diagram1">
+        <EntityTypeShape EntityType="FirmaTopografie.ActivityType" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="FirmaTopografie.Car" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="FirmaTopografie.Log_driver" Width="1.5" PointX="8.25" PointY="3.625" />
+        <EntityTypeShape EntityType="FirmaTopografie.Log" Width="1.5" PointX="5.25" PointY="4.25" />
+        <EntityTypeShape EntityType="FirmaTopografie.ProjectCategory" Width="1.5" PointX="3.75" PointY="1.125" />
+        <EntityTypeShape EntityType="FirmaTopografie.Project" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="FirmaTopografie.Role" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="FirmaTopografie.User" Width="1.5" PointX="3" PointY="4" />
+        <AssociationConnector Association="FirmaTopografie.FK__Logs__id_activit__30F848ED" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_pa__35BCFE0A" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_pa__36B12243" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_pa__37A5467C" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_pa__38996AB5" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_pr__34C8D9D1" />
+        <AssociationConnector Association="FirmaTopografie.FK__Log_drive__id_us__33D4B598" />
+        <AssociationConnector Association="FirmaTopografie.FK__Logs__id_project__300424B4" />
+        <AssociationConnector Association="FirmaTopografie.FK__Logs__id_user__2F10007B" />
+        <AssociationConnector Association="FirmaTopografie.FK__Projects__id_cat__2A4B4B5E" />
+        <AssociationConnector Association="FirmaTopografie.FK__Users__id_role__25869641" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,196 @@
+﻿.Base
+{
+    width:100vw; height:100vh; background:#f0f8ff; display:table; 
+}
+.Login_Div
+{
+      margin-left:auto; margin-right:auto;  vertical-align:middle;
+      text-align: center;  display: table-cell;
+
+}
+.Login_Form
+{
+    width:400px; height: 350px; background: #fff; border-radius: 10px; border-bottom: 3px solid #b5caff;  
+    display: inline-block;  text-align: center; vertical-align:middle;
+}
+.Login_Form h1
+{
+    font-family:Calibri; font-size:20px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180;
+   
+}
+.Login_username
+{
+    float: left; margin: 20px 0px 0px 18px; width: 350px; height: 32px;
+    padding-left: 10px; font-family: Segoe ui ; font-size: 13px; font-weight: bold;
+    border: 1px solid #ccc; background: url(Man.jpg) no-repeat;
+    background-position: 320px; border-radius: 8px;
+}
+.Login_Form input:focus 
+{
+    border: 1px solid #f90;
+    outline: none;
+}
+.Login_password
+{
+    float: left; margin: 20px 0px 0px 18px; width: 350px; height: 32px;
+    padding-left: 10px; font-family: Segoe ui ; font-size: 13px; font-weight: bold;
+    border: 1px solid #ccc; background: url(Lock.jpg) no-repeat;
+    background-position: 320px; border-radius: 8px;
+
+}
+.Login_btn 
+{
+    float: none; background: #e9e9e9; color: #6189df; font-family: Calibri; font-size: 17px; font-weight: bold;
+    border: 1px solid #b8cfff; border-radius: 6px; margin: 35px 70px 0px 70px; padding: 6px 17px 4px 18px;
+}
+.Main_Div
+{
+    position:fixed; top:0; width:100%;
+      margin-left:auto; margin-right:auto;  vertical-align:middle;
+      text-align: center;  display: table-cell; 
+}
+.Main_Menu_div
+{
+     background: #fff;  border: 3px solid #b5caff; border-radius:10px;
+    display: inline-block;  text-align: center; vertical-align:middle; max-height: 550px; width:auto; overflow: auto;  position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+}
+.Main_Div h1
+{
+    font-family:Calibri; font-size:22px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180; border-radius:10px;
+   
+}
+.grid
+{
+    border-collapse: collapse; text-align: center; 
+}
+.grid td
+{
+    padding:10px ;border:1px solid #c1c1c1;color:#444;font-size:1em; font-family:Calibri;
+
+}
+
+.grid th
+{
+    padding:4px 2px ; color:#707083; text-shadow:1px 1px 0px #ffffff; 
+    background: -webkit-gradient(linear,left bottom, left top,color-stop(0,#e5e5e9),color-stop(1,#fbfbfc)); 
+    border:1px solid #c1c1c1;font-size:1em;text-align:center ;
+
+}
+
+.grid .alt
+{
+    background:linear-gradient(#fff,#e6e6e6);
+
+}
+.grid tr:nth-child(odd){background-color: #e5e5e9}
+.Main_footer
+{
+    font-family:Calibri; font-size:24px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180; border-radius:10px; position:fixed; bottom:0; width:100%; 
+   
+}
+.Main_logout_btn 
+{
+    background: #e5e5e9; color: Black; font-family: Calibri; font-size: 17px; font-weight: bold;
+    border: 1px solid #b8cfff; border-radius: 6px; margin: 10px 0px 10px 0px; padding: 6px 17px 4px 18px;
+    text-transform: uppercase;
+}
+.Main_btn 
+{
+    background: #6189df; color: Black; font-family: Calibri; font-size: 17px; font-weight: bold;
+    border: 1px solid #b8cfff; border-radius: 6px; margin: 10px 0px 10px 0px; padding: 6px 17px 4px 18px;
+    text-transform: uppercase;
+}
+.Label
+{
+    font-family:Calibri; font-size: 16px; margin-right:15px; font-weight: bold; float:left; text-transform: uppercase; margin-left:15px;
+}
+.Dropdown 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; width:150px;
+}
+.TextBox 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; 
+}
+.Driver_log_work_btn 
+{
+    background: #6189df; color: Black; font-family: Calibri; font-size: 16px; font-weight: bold;
+    border: 1px solid #b8cfff; border-radius: 6px;  padding: 6px 17px 4px 18px; text-transform: uppercase;
+    margin-left:30px;
+}
+.Calendar 
+{
+    font-family:Calibri; border-radius: 6px; margin-left:auto;margin-right:auto;
+}
+.TextBox_ChangePassword 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; margin-left:75px; margin-top:20px;
+}
+.Register_lbl 
+{
+    float: left; font: bold 12px segoe ui; color: #ff0000;  font-size:13px; margin-left: 50px;
+    
+}
+.Add_TextBox 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; margin-left: 85px;
+}
+.Add_Form
+{
+    width:400px; height: 250px; background: #fff; border-radius: 10px; border-bottom: 3px solid #b5caff;  
+    display: inline-block;  text-align: center; vertical-align:middle;
+}
+.Add_Form h1
+{
+    font-family:Calibri; font-size:20px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180;
+   
+}
+.Log_Form
+{
+    width:550px; max-height: 800px; overflow: auto; background: #fff; border-radius: 10px; border-bottom: 3px solid #b5caff;  
+    display: inline-block;  text-align: center; vertical-align:middle;
+}
+.Log_Form h1
+{
+    font-family:Calibri; font-size:20px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180;
+   
+}
+.Log_TextBox 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; margin-left: 8px; width:140px;
+}
+.AddUser_Form
+{
+    width:400px; height: 450px; background: #fff; border-radius: 10px; border-bottom: 3px solid #b5caff;  
+    display: inline-block;  text-align: center; vertical-align:middle;
+}
+.AddUser_Form h1
+{
+    font-family:Calibri; font-size:20px; color: #fff; background: #6189df; text-align:left;
+    padding-left: 15px; text-transform: uppercase; line-height: 2; border-left: 2px solid #244180;
+    border-right: 2px solid #244180;
+   
+}
+.AddActivity_TextBox 
+{
+    font-family:Calibri; font-weight: bold; border-radius: 6px;
+    padding: 4px; margin-left: 5px; margin-top: 30px;
+}
