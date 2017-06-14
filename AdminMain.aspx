@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js" type="text/javascript"></script>
     <title></title>
 </head>
 <body>
@@ -23,8 +24,9 @@
                 <asp:MenuItem Text="Proiecte" Value="2"></asp:MenuItem>
                 <asp:MenuItem Text="Tipuri de activități" Value="3"></asp:MenuItem>
                 <asp:MenuItem Text="Mașini" Value="4"></asp:MenuItem>
-                <asp:MenuItem  Text="Rapoarte" Value="5"></asp:MenuItem>
-                <asp:MenuItem  Text="Schimbă parola" Value="6"></asp:MenuItem>
+                <asp:MenuItem  Text="Rapoarte ore lucrate" Value="5"></asp:MenuItem>
+                <asp:MenuItem  Text="Rapoarte deplasări" Value="6"></asp:MenuItem>
+                <asp:MenuItem  Text="Schimbă parola" Value="7"></asp:MenuItem>
                 
                  
             </Items>
@@ -279,8 +281,377 @@
             </asp:View>
 
               <asp:View ID="ViewReports" runat="server">
+
+          
+
+                  <asp:TextBox ID="TextBoxDataStart" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateStart" runat="server" Text="Selectare data început" OnClick="ButtonSelectDateStart_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateStart" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+
+                 <asp:TextBox ID="TextBoxDataFinish" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateFinish" runat="server" Text="Selectare data sfârșit" OnClick="ButtonSelectDateFinish_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateFinish" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+      
+                  <p>
+            <asp:Label ID="LabelUser" runat="server" Text="ID Utilizator" CssClass="Label"></asp:Label>
+             <asp:DropDownList ID="DropDownList1"  runat="server" CssClass="Dropdown">
+        </asp:DropDownList>
+        </p>
+
+                   <p>
+            <asp:Label ID="LabelType" runat="server" Text="Tip raport" CssClass="Label"></asp:Label>
+             <asp:DropDownList ID="DropDownList2"  runat="server" CssClass="Dropdown">
+        </asp:DropDownList>
+        </p>
+        
+        <asp:Button ID="ButtonFilter" runat="server" Text="Schimbă raportul" OnClick="ButtonFilter_Click" CssClass="Main_btn" />
+                <br/><br/>
+
+                  <canvas id="projects-graph" width="800" height="500"></canvas>
+
+                 
+    <script>
+
+       
+
+        $(function () {
+            var url=[], label=[];
+            
+             if (("<%= start_date %>" == null||"<%= start_date %>" == ''||"<%= start_date %>" == 'undefined'||"<%= start_date %>" == '0')&&("<%= finish_date %>" == null||"<%= finish_date %>" == ''||"<%= finish_date %>" == 'undefined'||"<%= finish_date %>" == '0'))
+             {
+                 if ("<%= report_type %>" == 1) {
+                     if ("<%= id_user %>" == 0) {
+                         url = "/api/projects";
+                         label = "Ore lucrate per proiecte de toți utilizatorii";
+                     }
+                     else
+                     {
+                         url = "/api/projects/?id=<%= id_user %>";
+                         label = "Ore lucrate per proiecte de utilizatorul <%= id_user %>";
+                     }
+                 }
+                 else
+                 {
+                     if ("<%= id_user %>" == 0) {
+                         url = "api/activities";
+                         label = "Ore lucrate per activități de toți utilizatorii";
+                     }
+                     else {
+                         url = "/api/activities/?id=<%= id_user %>";
+                         label = "Ore lucrate per activități de utilizatorul <%= id_user %>";
+                     }
+                 }
+               
+            }
+            else
+            {
+                 if ("<%= report_type %>" == 1) {
+                     if ("<%= id_user %>" == 0) {
+                         url = "/api/projects?date_start=<%= start_date %>&date_finish=<%= finish_date %>";
+                         label = "Ore lucrate per proiecte de toți utilizatorii între <%= start_date %> și <%= finish_date %>";
+                     }
+                     else
+                     {
+                         url = "/api/projects/?id=<%= id_user %>&date_start=<%= start_date %>&date_finish=<%= finish_date %>";
+                         label = "Ore lucrate per proiecte de utilizatorul <%= id_user %> între <%= start_date %> și <%= finish_date %>";
+                     }
+                 }
+                 else
+                 {
+                     if ("<%= id_user %>" == 0) {
+                         url = "api/activities?date_start=<%= start_date %>&date_finish=<%= finish_date %>";
+                         label = "Ore lucrate per activități de toți utilizatorii între <%= start_date %> și <%= finish_date %>";
+                     }
+                     else {
+                         url = "/api/activities/?id=<%= id_user %>&date_start=<%= start_date %>&date_finish=<%= finish_date %>";
+                         label = "Ore lucrate per activități de utilizatorul <%= id_user %> între <%= start_date %> și <%= finish_date %>";
+                     }
+                 }
+            }
+          
+         
+            
+            $.getJSON(url, function (result) {
+                var labels = [], data = [], colors = [];
+
+
+                var randomColorGenerator = function () {
+                    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+        };
+
+                for (var i = 0; i < result.length; i = i + 2) {
+
+                    labels.push(result[i]);
+                    data.push(result[i + 1]);
+                    colors.push(randomColorGenerator());
+
+        }
+
+
+                var chartData = {
+            labels: labels,
+            datasets: [
+                      {
+            label: label,
+            backgroundColor: colors,
+            data: data
+        }
+        ]
+        };
+                var opt = {
+            events: false,
+            tooltips: {
+            enabled: false
+        },
+            hover: {
+            animationDuration: 0
+        },
+            scales: {
+            yAxes: [{
+            ticks: {
+            beginAtZero: true
+        }
+        }]
+        },
+            animation: {
+            duration: 1,
+            onComplete: function () {
+                            var chartInstance = this.chart,
+                                ctx = chartInstance.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+
+                            this.data.datasets.forEach(function (dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function (bar, index) {
+                                    var data = dataset.data[index];
+                                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+        });
+        });
+        }
+        }
+        };
+                var ctx = document.getElementById("projects-graph"),
+                    myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: opt
+        })
+
+        });
+
+        })
+        
+        
+    </script>
                 
             </asp:View>
+
+             <asp:View ID="ViewReports2" runat="server">
+            <asp:TextBox ID="TextBoxDataStart2" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar12" runat="server" OnSelectionChanged="Calendar12_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateStart2" runat="server" Text="Selectare data început" OnClick="ButtonSelectDateStart2_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateStart2" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+
+                 <asp:TextBox ID="TextBoxDataFinish2" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar22" runat="server" OnSelectionChanged="Calendar22_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateFinish2" runat="server" Text="Selectare data sfârșit" OnClick="ButtonSelectDateFinish2_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateFinish2" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+      
+                  <p>
+            <asp:Label ID="LabelUser2" runat="server" Text="ID Utilizator" CssClass="Label"></asp:Label>
+             <asp:DropDownList ID="DropDownList12"  runat="server" CssClass="Dropdown">
+        </asp:DropDownList>
+        </p>
+
+                   <p>
+            <asp:Label ID="LabelType2" runat="server" Text="Tip raport" CssClass="Label"></asp:Label>
+             <asp:DropDownList ID="DropDownList22"  runat="server" CssClass="Dropdown">
+        </asp:DropDownList>
+        </p>
+        
+        <asp:Button ID="ButtonFilter2" runat="server" Text="Schimbă raportul" OnClick="ButtonFilter2_Click" CssClass="Main_btn" />
+                <br/><br/>
+
+                        <canvas id="drivers-graph" width="800" height="500"></canvas>
+
+                 
+    <script>
+
+       
+
+        $(function () {
+            var url=[], label=[];
+            
+             if (("<%= start_date2 %>" == null||"<%= start_date2 %>" == ''||"<%= start_date2 %>" == 'undefined'||"<%= start_date2 %>" == '0')&&("<%= finish_date2 %>" == null||"<%= finish_date2 %>" == ''||"<%= finish_date2 %>" == 'undefined'||"<%= finish_date2 %>" == '0'))
+             {
+                 if ("<%= report_type2 %>" == 1) {
+                     if ("<%= id_user2 %>" == 0) {
+                         url = "api/DriverHours";
+                         label = "Ore deplasări pentru toți șoferii";
+                     }
+                     else
+                     {
+                         url = "api/DriverHours/?id=<%= id_user2 %>";
+                         label = "Ore deplasări pentru șoferul <%= id_user2 %>";
+                     }
+                 }
+                 else
+                 {
+                     if ("<%= id_user2 %>" == 0) {
+                         url = "api/DriverKm";
+                         label = "Km parcurși de toți șoferii";
+                     }
+                     else {
+                         url = "/api/DriverKm/?id=<%= id_user2 %>";
+                         label = "Km parcurși de șoferul <%= id_user2 %>";
+                     }
+                 }
+               
+            }
+            else
+            {
+                 if ("<%= report_type2 %>" == 1) {
+                     if ("<%= id_user2 %>" == 0) {
+                         url = "/api/DriverHours?date_start=<%= start_date2 %>&date_finish=<%= finish_date2 %>";
+                         label = "Ore de deplasare pentru toți șoferii între <%= start_date2 %> și <%= finish_date2 %>";
+                     }
+                     else
+                     {
+                         url = "/api/DriverHours/?id=<%= id_user2 %>&date_start=<%= start_date2 %>&date_finish=<%= finish_date2 %>";
+                         label = "Ore de deplasare ale șoferului <%= id_user2 %> între <%= start_date2 %> și <%= finish_date2 %>";
+                     }
+                 }
+                 else
+                 {
+                     if ("<%= id_user2 %>" == 0) {
+                         url = "api/DriverKm?date_start=<%= start_date2 %>&date_finish=<%= finish_date2 %>";
+                         label = "Km parcurși de toți șoferii între <%= start_date2 %> și <%= finish_date2 %>";
+                     }
+                     else {
+                         url = "/api/DriverKm/?id=<%= id_user2 %>&date_start=<%= start_date2 %>&date_finish=<%= finish_date2 %>";
+                         label = "Km parcurși de către șoferul <%= id_user2 %> între <%= start_date2 %> și <%= finish_date2 %>";
+                     }
+                 }
+            }
+          
+         
+            
+            $.getJSON(url, function (result) {
+                var labels = [], data = [], colors = [];
+
+
+                var randomColorGenerator = function () {
+                    return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
+        };
+
+                for (var i = 0; i < result.length; i = i + 2) {
+
+                    labels.push(result[i]);
+                    data.push(result[i + 1]);
+                    colors.push(randomColorGenerator());
+
+        }
+
+
+                var chartData = {
+            labels: labels,
+            datasets: [
+                      {
+            label: label,
+            backgroundColor: colors,
+            data: data
+        }
+        ]
+        };
+                var opt = {
+            events: false,
+            tooltips: {
+            enabled: false
+        },
+            hover: {
+            animationDuration: 0
+        },
+            scales: {
+            yAxes: [{
+            ticks: {
+            beginAtZero: true
+        }
+        }]
+        },
+            animation: {
+            duration: 1,
+            onComplete: function () {
+                            var chartInstance = this.chart,
+                                ctx = chartInstance.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+
+                            this.data.datasets.forEach(function (dataset, i) {
+                                var meta = chartInstance.controller.getDatasetMeta(i);
+                                meta.data.forEach(function (bar, index) {
+                                    var data = dataset.data[index];
+                                    ctx.fillText(data, bar._model.x, bar._model.y - 5);
+        });
+        });
+        }
+        }
+        };
+                var ctx = document.getElementById("drivers-graph"),
+                    myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: opt
+        })
+
+        });
+
+        })
+        
+        
+    </script>
+
+                 </asp:View>
 
              <asp:View ID="ViewChangePassword" runat="server" >
                <asp:Label ID="LabelWrongPassword" runat="server" Text="Parolă greșită!" Visible="False"></asp:Label>

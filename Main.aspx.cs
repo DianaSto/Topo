@@ -12,6 +12,8 @@ public partial class Main : System.Web.UI.Page
     private Pontaje_firma_topografieEntities db = new Pontaje_firma_topografieEntities();
     private Dictionary<Log, string> data = new Dictionary<Log, string>();
     protected int id_user;
+    protected string start_date;
+    protected string finish_date;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["username"] == null)
@@ -122,4 +124,74 @@ public partial class Main : System.Web.UI.Page
         }
     }
 
+    protected void ButtonSelectDateStart_Click(object sender, EventArgs e)
+    {
+        Calendar1.Visible = true;
+    }
+
+    protected void Calendar1_SelectionChanged(object sender, EventArgs e)
+    {
+        TextBoxDataStart.Text = Calendar1.SelectedDate.ToShortDateString();
+        Calendar1.Visible = false;
+    }
+
+    protected void ButtonSelectDateFinish_Click(object sender, EventArgs e)
+    {
+        Calendar2.Visible = true;
+    }
+
+    protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+    {
+        TextBoxDataFinish.Text = Calendar2.SelectedDate.ToShortDateString();
+        Calendar2.Visible = false;
+    }
+
+    protected void ButtonFilter_Click(object sender, EventArgs e)
+    {
+        string start, finish;
+        string[] breakApart = TextBoxDataStart.Text.Split('.');
+        if (breakApart.Length>1)
+        {
+            start = breakApart[2] + "-" + breakApart[1] + "-" + breakApart[0];
+        }
+        else
+        {
+            start = null;
+        }
+        breakApart = TextBoxDataFinish.Text.Split('.');
+        if (breakApart.Length>1)
+        {
+            finish = breakApart[2] + "-" + breakApart[1] + "-" + breakApart[0];
+        }
+        else
+        {
+            finish = null;
+        }
+        if (start == null)
+            if (finish != null)
+            {
+                LabelMissingDateStart.Visible = true;
+                LabelMissingDateFinish.Visible = false;
+            }
+        if (finish == null)
+            if (start != null)
+            {
+                LabelMissingDateFinish.Visible = true;
+                LabelMissingDateStart.Visible = false;
+            }
+        if (start != null && finish != null)
+        {
+            LabelMissingDateStart.Visible = false;
+            LabelMissingDateFinish.Visible = false;
+            start_date = start;
+            finish_date = finish;
+        }
+        if (start == null && finish == null)
+        {
+            LabelMissingDateStart.Visible = false;
+            LabelMissingDateFinish.Visible = false;
+            start_date = null;
+            finish_date = null;
+        }
+    }
 }

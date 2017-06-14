@@ -48,7 +48,7 @@
         <p>
         <asp:Label ID="LabelDate" runat="server" Text="Data" CssClass="Label"></asp:Label>
         <asp:TextBox ID="TextBoxData" runat="server" CssClass="TextBox"></asp:TextBox>       
-        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="False" CssClass="Calendar">
+        <asp:Calendar ID="CalendarLog" runat="server" OnSelectionChanged="CalendarLog_SelectionChanged" Visible="False" CssClass="Calendar">
                  <TitleStyle BackColor="#6189df" ForeColor="White">
          </TitleStyle>
              <TodayDayStyle BackColor="#6189df" ForeColor="White">
@@ -218,25 +218,69 @@
 
                 </asp:Calendar>   
             
-            </asp:View>
+                </asp:View>
 
             <asp:View ID="ViewReports" runat="server">
 
-                  <canvas id="projects-graph" width="800" height="500"></canvas>
+           <asp:TextBox ID="TextBoxDataStart" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateStart" runat="server" Text="Selectare data început" OnClick="ButtonSelectDateStart_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateStart" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+
+                 <asp:TextBox ID="TextBoxDataFinish" placeholder="DATA" runat="server" CssClass="Log_TextBox"></asp:TextBox>       
+        <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged" Visible="False" CssClass="Calendar">
+             <TitleStyle BackColor="#6189df" ForeColor="White">
+         </TitleStyle>
+             <TodayDayStyle BackColor="#6189df" ForeColor="White">
+            </TodayDayStyle>
+             
+        </asp:Calendar>
+          
+            
+        <asp:Button ID="ButtonSelectDateFinish" runat="server" Text="Selectare data sfârșit" OnClick="ButtonSelectDateFinish_Click" CssClass="Main_btn" />
+            <asp:Label ID="LabelMissingDateFinish" runat="server" Text="*" ForeColor="#FF3300" Visible="False"></asp:Label>
+
+        <asp:Button ID="ButtonFilter" runat="server" Text="Aplică filtru" OnClick="ButtonFilter_Click" CssClass="Main_btn" />
+                <br/><br/>
+
+                <canvas id="projects-graph" width="800" height="500"></canvas>
 
                  
     <script>
 
-      
+       
 
         $(function () {
-            $.getJSON("/api/driver/<%= id_user %>", function (result) {
+            var url=[];
+            
+
+            if (("<%= start_date %>" == null||"<%= start_date %>" == ''||"<%= start_date %>" == 'undefined'||"<%= start_date %>" == '0')&&("<%= finish_date %>" == null||"<%= finish_date %>" == ''||"<%= finish_date %>" == 'undefined'||"<%= finish_date %>" == '0'))
+            {
+                url="/api/driver/<%= id_user %>";
+            }
+            else
+            {
+               url = "api/driver/<%= id_user %>/<%= start_date %>/<%= finish_date %>";
+            }
+           
+         
+            
+            $.getJSON(url, function (result) {
                 var labels = [], data = [], colors = [];
 
 
                 var randomColorGenerator = function () {
                     return '#' + (Math.random().toString(16) + '0000000').slice(2, 8);
-                };
+        };
 
                 for (var i = 0; i < result.length; i = i + 2) {
 
@@ -244,37 +288,37 @@
                     data.push(result[i + 1]);
                     colors.push(randomColorGenerator());
 
-                }
+        }
 
 
                 var chartData = {
-                    labels: labels,
-                    datasets: [
+            labels: labels,
+            datasets: [
                       {
-                          label: 'Ore deplasări per proiect',
-                          backgroundColor: colors,
-                          data: data
-                      }
-                    ]
-                };
+            label: 'Ore deplasari per proiect',
+            backgroundColor: colors,
+            data: data
+        }
+        ]
+        };
                 var opt = {
-                    events: false,
-                    tooltips: {
-                        enabled: false
-                    },
-                    hover: {
-                        animationDuration: 0
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
-                        }]
-                    },
-                    animation: {
-                        duration: 1,
-                        onComplete: function () {
+            events: false,
+            tooltips: {
+            enabled: false
+        },
+            hover: {
+            animationDuration: 0
+        },
+            scales: {
+            yAxes: [{
+            ticks: {
+            beginAtZero: true
+        }
+        }]
+        },
+            animation: {
+            duration: 1,
+            onComplete: function () {
                             var chartInstance = this.chart,
                                 ctx = chartInstance.ctx;
                             ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
@@ -286,22 +330,22 @@
                                 meta.data.forEach(function (bar, index) {
                                     var data = dataset.data[index];
                                     ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                                });
-                            });
-                        }
-                    }
-                };
+        });
+        });
+        }
+        }
+        };
                 var ctx = document.getElementById("projects-graph"),
                     myLineChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: chartData,
-                        options: opt
-                    })
-
-            });
-
+            type: 'bar',
+            data: chartData,
+            options: opt
         })
 
+        });
+
+        })
+        
         
     </script>
                 
